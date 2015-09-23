@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Animes</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th colspan="3"></th>
+    </tr>
+    <% if user_signed_in? %>
+    	<%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
+    <% else %>
+    	<%= link_to "Sign in", create_user_session_path, :method => :create %>
+    <% end %>
+    </thead>
+
+  <tbody>
+    <% @animes.each do |anime| %>
+      <tr>
+        <td><%= anime.name %></td>
+        <td><%= anime.description %></td>
+        <td><%= link_to 'Show', anime %></td>
+        <td><%= link_to 'Edit', edit_anime_path(anime) %></td>
+        <td><%= link_to 'Destroy', anime, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Anime', new_anime_path %>
