@@ -29,6 +29,13 @@
 		</div>
 	</div>
 	<div class="col-xs-4">
+		<% Review.where(anime_id: @anime.id).find_each do |review| %>
+			<div class="col-xs-12 basic-padding transparent-white curved-border justified-text">
+				<p>
+					<b>Description:</b> <%= review.comment %>
+				</p>
+			</div>
+		<% end %>
 		<div class="col-xs-12 basic-padding transparent-white curved-border justified-text">
 			<p>
 				<b>Description:</b> <%= @anime.description %>

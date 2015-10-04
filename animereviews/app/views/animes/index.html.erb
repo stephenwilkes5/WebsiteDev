@@ -1,3 +1,13 @@
+<% if !user_signed_in? %>
+	<div class="jumbotron transparent-white">
+		<h1>Anime Reviews!</h1>
+		<p>With or without opinions bringing science into the culture of
+		primarily overseas styles of writing that share with emotion and
+		action the primary qualities of entertainment which animation
+		has always been in tune with. [writing nonsense is fun]</p>
+		<p><%= link_to "Sign up to compose reviews", new_user_registration_path, class: "btn btn-primary btn-lg" %></p>
+	</div>
+<% end %>
 <div class="row">
 	<% @animes.each do |anime| %>
 		<div class="col-sm-6 col-md-3">
