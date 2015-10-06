@@ -1,3 +1,11 @@
+<% @client = Twitter::REST::Client.new do |config|
+  config.consumer_key        = "oxxWCqavIAZZnNstFLoYnhT7N"
+  config.consumer_secret     = "hMPqRPmHb0aZN44ySOS8dfO1IoebFT7StzxswsyIV4TOeVERmg"
+  config.access_token        = "93915155-g1RPbJjwDtANFFy0GVBgF7AczbTxP0eIt8etYc0EZ"
+  config.access_token_secret = "ySQ0yvK6NO29fMKwvAw7BlaCG7KioqhmoEYRzSdCyhuF4"
+end %>
+
+
 <div class="row">
 	<div class="col-xs-12">
 		<div class="col-xs-12 basic-padding transparent-white curved-border justified-text">
@@ -6,8 +14,9 @@
 				<% if user_signed_in? %>
 					<%= link_to 'Edit this page', edit_anime_path(@anime) %>
 				<% else %>
-					Sign in to edit.
+					<%= link_to 'Sign in to edit.', new_user_session_path %>
 				<% end %>
+				| <p id="notice"><%= notice %></p>
 			</p>
 		</div>
 	</div>
@@ -15,7 +24,7 @@
 <div class="row">
 	<div class="col-xs-4">
 		<div class="col-xs-12 basic-padding transparent-white curved-border centered-text">
-			<%= image_tag @anime.poster.url(:medium) %>
+			<%= image_tag(@anime.poster.url(:medium))  %>
 		</div>
 		<div class="col-xs-12 basic-padding transparent-white curved-border centered-text">
 			<h2>
@@ -23,51 +32,60 @@
 			</h2><h2></h2>
 		</div>
 		<div class="col-xs-12 basic-padding transparent-white curved-border justified-text">
-			<p></p><p>
+			<p>
 				<b>Description:</b> <%= @anime.description %>
 			</p>
 		</div>
 	</div>
 	<div class="col-xs-4">
-		<% Review.where(anime_id: @anime.id).find_each do |review| %>
+		<div class="col-xs-12 basic-padding transparent-white curved-border centered-text">
+			<p></p><p>
+				<% if user_signed_in? %>
+					<%= link_to "Write a Review", new_anime_review_path(@anime), class: "btn btn-primary" %>
+				<% end %>
+				Average Review Score: <%= @avg_review %>
+			</p>
+		</div>
+		<% Review.where(anime_id: @anime.id).order('created_at DESC').find_each do |review| %>
 			<div class="col-xs-12 basic-padding transparent-white curved-border justified-text">
 				<p>
-					<b>Description:</b> <%= review.comment %>
+					<b>User: <%= review.user.email %></b>
+					<div class="star-rating" data-score= <%= review.rating %> ></div>
+					<br>
+					<%= review.comment %>
 				</p>
 			</div>
 		<% end %>
-		<div class="col-xs-12 basic-padding transparent-white curved-border justified-text">
-			<p>
-				<b>Description:</b> <%= @anime.description %>
-			</p>
-		</div>
 	</div>
 	<div class="col-xs-4">
-		<div class="col-xs-12 basic-padding transparent-white curved-border justified-text">
-			<p>
-				<b>Description:</b> <%= @anime.description %>
+		<div class="col-xs-12 basic-padding transparent-white curved-border centered-text">
+			<p></p><p>
+				<b>Recent Tweets</b>
 			</p>
 		</div>
+		<% @client.search("\""+@anime.name+"\"", result_type: "recent").take(10).collect do |tweet| %>
+			<div class="col-xs-12 basic-padding transparent-white curved-border">
+				<p>
+					<b><%= tweet.user.screen_name %></b>
+					<%= raw Rinku.auto_link(tweet.text) %>
+					<%= image_tag(tweet.media[0]["media_url"], :width => "100%") if(tweet.media.present?) %>
+				</p>
+			</div>
+		<% end %>
 	</div>
 </div>
 
 
+<script>
+	$('.star-rating').raty({
+		path: '/assets/',
+		readOnly: true,
+		score: function() {
+			return $(this).attr('data-score');
+		}
+    	});
+</script>
 
-
-
-<p id="notice"><%= notice %></p>
-
-
-
-<p>
-  <strong>Name:</strong>
-  <%= @anime.name %>
-</p>
-
-<p>
-  <strong>Description:</strong>
-  <%= @anime.description %>
-</p>
 
 
 

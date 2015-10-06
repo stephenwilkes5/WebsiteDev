@@ -1,6 +1,6 @@
 class AnimesController < ApplicationController
   before_action :set_anime, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!, only: [:edit, :update, :destroy]
+  before_action :authenticate_user!, only: [:new, :edit, :update, :destroy]
 
   # GET /animes
   # GET /animes.json
@@ -11,6 +11,12 @@ class AnimesController < ApplicationController
   # GET /animes/1
   # GET /animes/1.json
   def show
+  	  @reviews = Review.where(anime_id: @anime.id).order("created_at DESC")
+  	  if @reviews.blank?
+  	  	  @avg_review = 0
+  	  else
+  	  	  @avg_review = @reviews.average(:rating).round(2)
+  	  end
   end
 
   # GET /animes/new
