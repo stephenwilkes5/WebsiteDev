@@ -1,0 +1,10 @@
+class AddPosterColumnsToAnimes < ActiveRecord::Migration
+  def up
+    add_attachment :animes, :poster
+  end
+
+  def down
+    remove_attachment :animes, :poster
+  end
+end
+
