@@ -1,4 +1,4 @@
-== README
+== ANIME REVIEW WEBSITE (With Twitter functionality!)
 
 This is a practice Ruby on Rails Website, using bootstrap for styling, along
 with various gems for user authentication, image uploading, and a handful of
@@ -12,5 +12,7 @@ The anime page also displays the ten most recent Twitter tweets with the anime's
 exact name in them.
 
 The website may be viewed here, having been deployed using Heroku:
+
+Have yet to set up external hosting for image uploads, as Heroku drops them.
 
 https://arcane-reaches-3746.herokuapp.com
