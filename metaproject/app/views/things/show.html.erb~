@@ -1,3 +1,5 @@
+<p id="notice"><%= notice %></p>
+
 <p>
   <strong>Title:</strong>
   <%= @thing.title %>
@@ -9,4 +11,4 @@
 </p>
 
 <%= link_to 'Edit', edit_thing_path(@thing) %> |
-<%= link_to 'Back', things_path %>ss
+<%= link_to 'Back', things_path %>
