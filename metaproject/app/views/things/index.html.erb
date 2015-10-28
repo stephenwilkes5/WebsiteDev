@@ -1,27 +1,45 @@
-<h1>Listing Things</h1>
+<% if !user_signed_in? %>
+	<div class="jumbotron transparent-white">
+		<h1>Things done!</h1>
+		<p>I do lots of things! I haved logged some of them here, kind of like a scrap book!
+		Other users can log things too! Simply sign up and add any things you would like!</p>
+		<p><%= link_to "Sign up to log things!", new_user_registration_path, class: "btn btn-primary btn-lg" %></p>
+	</div>
+<% end %>
 
-<table>
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Description</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @things.each do |thing| %>
-      <tr>
-        <td><%= thing.title %></td>
-        <td><%= thing.description %></td>
-        <td><%= link_to 'Show', thing %></td>
-        <td><%= link_to 'Edit', edit_thing_path(thing) %></td>
-        <td><%= link_to 'Destroy', thing, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Thing', new_thing_path %>
+<div class="row">
+	<% i = 0 %>
+	<% @things.each do |thing| %>
+		<div class="col-sm-12 col-md-12">
+			<% if i % 2 == 0 %>
+				<div class="col-sm-6 col-md-6">
+					<div class="thumbnail centered-text transparent-white">
+						<iframe src="https://www.youtube.com/embed/EP1mczaq3zo" width="448" height="252" frameborder="0" allowfullscreen></iframe>
+						<%#  %>
+						<%# <%= link_to (image_tag anime.poster.url(:medium), class: 'image'), thing %>
+					</div>
+				</div>
+			<% end %>
+			<div class="col-sm-6 col-md-6">
+				<div class="thumbnail centered-text transparent-white">
+					<h2>
+						<%= link_to thing.title, thing %>
+					</h2>
+					<p>
+						<%= thing.description %>
+					</p>
+				</div>
+			</div>
+			<% if i % 2 != 0 %>
+				<div class="col-sm-6 col-md-6">
+					<div class="thumbnail centered-text transparent-white">
+						<iframe src="https://www.youtube.com/embed/EP1mczaq3zo" width="448" height="252" frameborder="0" allowfullscreen></iframe>
+						<%#  %>
+						<%# <%= link_to (image_tag anime.poster.url(:medium), class: 'image'), thing %>
+					</div>
+				</div>
+			<% end %>
+			<% i += 1 %>
+		</div>
+	<% end %>
+</div>
