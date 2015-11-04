@@ -10,36 +10,49 @@
 <div class="row">
 	<% i = 0 %>
 	<% @things.each do |thing| %>
-		<div class="col-sm-12 col-md-12">
-			<% if i % 2 == 0 %>
+		<div class="thumbnail col-sm-12 col-md-12 transparent-white">
+			<% if thing.video_tag != nil %>
+				<% if i % 2 == 0 %>
+					<div class="col-sm-6 col-md-6">
+						<div class="centered-text">
+							<iframe src="https://www.youtube.com/embed/<%= thing.video_tag %>" width="448" height="252" frameborder="0" allowfullscreen></iframe>
+							<%#  %>
+							<%# <%= link_to (image_tag anime.poster.url(:medium), class: 'image'), thing %>
+						</div>
+					</div>
+				<% end %>
 				<div class="col-sm-6 col-md-6">
-					<div class="thumbnail centered-text transparent-white">
-						<iframe src="https://www.youtube.com/embed/EP1mczaq3zo" width="448" height="252" frameborder="0" allowfullscreen></iframe>
-						<%#  %>
-						<%# <%= link_to (image_tag anime.poster.url(:medium), class: 'image'), thing %>
+					<div class="centered-text">
+						<h2>
+							<%= link_to thing.title, thing %>
+						</h2>
+						<p>
+							<%= thing.description %>
+						</p>
+					</div>
+				</div>
+				<% if i % 2 != 0 %>
+					<div class="col-sm-6 col-md-6">
+						<div class="centered-text">
+							<iframe src="https://www.youtube.com/embed/<%= thing.video_tag %>" width="448" height="252" frameborder="0" allowfullscreen></iframe>
+							<%#  %>
+							<%# <%= link_to (image_tag anime.poster.url(:medium), class: 'image'), thing %>
+						</div>
+					</div>
+				<% end %>
+				<% i += 1 %>
+			<% else %>
+				<div class="col-sm-12 col-md-12">
+					<div class="centered-text">
+						<h2>
+							<%= link_to thing.title, thing %>
+						</h2>
+						<p>
+							<%= thing.description %>
+						</p>
 					</div>
 				</div>
 			<% end %>
-			<div class="col-sm-6 col-md-6">
-				<div class="thumbnail centered-text transparent-white">
-					<h2>
-						<%= link_to thing.title, thing %>
-					</h2>
-					<p>
-						<%= thing.description %>
-					</p>
-				</div>
-			</div>
-			<% if i % 2 != 0 %>
-				<div class="col-sm-6 col-md-6">
-					<div class="thumbnail centered-text transparent-white">
-						<iframe src="https://www.youtube.com/embed/EP1mczaq3zo" width="448" height="252" frameborder="0" allowfullscreen></iframe>
-						<%#  %>
-						<%# <%= link_to (image_tag anime.poster.url(:medium), class: 'image'), thing %>
-					</div>
-				</div>
-			<% end %>
-			<% i += 1 %>
 		</div>
 	<% end %>
 </div>
